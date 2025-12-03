@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fish Quality Data</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+        .fish-id {
+            font-size: 18px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        .content {
+            padding: 30px;
+        }
+        .data-row {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        .data-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .value {
+            font-size: 16px;
+            color: #333;
+            font-weight: 500;
+        }
+        .quality-score {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .score-5 {
+            background: #4caf50;
+            color: white;
+        }
+        .score-4 {
+            background: #8bc34a;
+            color: white;
+        }
+        .score-3 {
+            background: #ffc107;
+            color: #333;
+        }
+        .score-2 {
+            background: #ff9800;
+            color: white;
+        }
+        .score-1 {
+            background: #f44336;
+            color: white;
+        }
+        .loading {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: #f44336;
+        }
+        .notes-box {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐟 Fish Quality Database</h1>
+            <div class="fish-id" id="fishIdDisplay">Loading...</div>
+        </div>
+        <div class="content" id="content">
+            <div class="loading">Loading fish data...</div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js"></script>
+    <script>
+        // Get fish ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const fishId = urlParams.get('id');
+
+        if (!fishId) {
+            document.getElementById('content').innerHTML = 
+                '<div class="error">❌ No fish ID provided in URL</div>';
+            document.getElementById('fishIdDisplay').textContent = 'Error';
+        } else {
+            document.getElementById('fishIdDisplay').textContent = fishId;
+            loadFishData(fishId);
+        }
+
+        function loadFishData(id) {
+            // Update this URL to your GitHub raw file URL
+            const csvUrl = 'https://raw.githubusercontent.com/YOUR_USERNAME/fish-quality-database/main/fish_database.csv';
+            
+            Papa.parse(csvUrl, {
+                download: true,
+                header: true,
+                complete: function(results) {
+                    const fishData = results.data.find(row => row.Unique_ID === id);
+                    
+                    if (fishData) {
+                        displayFishData(fishData);
+                    } else {
+                        document.getElementById('content').innerHTML = 
+                            '<div class="error">❌ Fish ID not found in database</div>';
+                    }
+                },
+                error: function(error) {
+                    document.getElementById('content').innerHTML = 
+                        '<div class="error">❌ Error loading data: ' + error.message + '</div>';
+                }
+            });
+        }
+
+        function displayFishData(data) {
+            const qualityClass = 'score-' + data.Quality_Score;
+            
+            const html = `
+                <div class="data-row">
+                    <div class="label">Species</div>
+                    <div class="value">${data.Species}</div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="label">Catch Date</div>
+                    <div class="value">${data.Catch_Date}</div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="label">Catch Location</div>
+                    <div class="value">${data.Catch_Location}</div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="label">Processing Method</div>
+                    <div class="value">${data.Processing_Method}</div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="label">Quality Score</div>
+                    <div class="value">
+                        <span class="quality-score ${qualityClass}">
+                            ${data.Quality_Score} / 5
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="label">Temperature Log</div>
+                    <div class="value">${data.Temperature_Log}</div>
+                </div>
+                
+                <div class="data-row">
+                    <div class="label">Notes</div>
+                    <div class="notes-box">${data.Notes}</div>
+                </div>
+            `;
+            
+            document.getElementById('content').innerHTML = html;
+        }
+    </script>
+</body>
+</html>
