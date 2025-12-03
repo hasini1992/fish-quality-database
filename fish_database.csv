@@ -1,0 +1,11 @@
+Unique ID,Species,Catch Date,Catch Location,Processing Method,Quality Score (1-5),Temperature Log (°C),Notes
+A-1001,Atlantic Cod,2025/11/28,Gulf of Maine,Filet & Flash Frozen,5,Maintained $-18^{\circ}\text{C}$throughout storage.,"Excellent, premium grade. Used for high-end restaurant supply."
+B-1002,Sockeye Salmon,2025/11/29,Alaska Peninsula,"Whole, Gilled & Gutted",4,Kept under $2^{\circ}\text{C}$ on ice slurry.,"Good fat content, eyes slightly cloudy due to ice contact. Very fresh."
+C-1003,Yellowfin Tuna,2025/11/26,Eastern Pacific,"Loin, Vacuum Sealed",5,"$-0.5^{\circ}\text{C}$for chilling, air blast $-35^{\circ}\text{C}$freezing.","Sushi-grade quality. Firm texture, vibrant red color. Traceable to vessel ""Sea Star""."
+D-1004,Farmed Tilapia,2025/11/30,Aquaculture Pond 4,Live Harvest/Chilled,3,Consistent $3^{\circ}\text{C}$ after harvest.,Acceptable quality for general market. Slight feed discoloration near the gills.
+E-1005,European Seabass,2025/11/27,Mediterranean Sea,"Whole, Cleaned, Iced",5,Never exceeded $1^{\circ}\text{C}$.,"Top-tier quality, certified sustainable catch. Clear eyes, bright red gills."
+F-1006,Haddock,2025/11/29,North Atlantic,Fillet (Skin On),4,Held at $0^{\circ}\text{C}$,"Minor bruising on two pieces from net, but flesh is firm and white."
+G-1007,Pacific Halibut,2025/11/25,Bering Sea,"Steaks, Individually Wrapped",5,Deep frozen at $-30^{\circ}\text{C}$.,"Highest grade. Perfect white meat. Harvested by long-line, low stress."
+H-1008,Mackerel,2025/11/28,North Sea,"Whole, Bulk Frozen",3,"Rapid freeze, held at $-20^{\circ}\text{C}$.","Standard quality, good for processing. A few fish show signs of scale loss."
+I-1009,Rainbow Trout,2025/11/30,Local Fish Farm,"Whole, Smoked",4,Product finished smoking at $65^{\circ}\text{C}$.,"Smoked on oak wood. Good moisture content, slight breakage on tail fin."
+J-1010,King Prawns,2025/11/27,Southeast Asia,"Shell-on, Cooked, Frozen",5,Boiled then blast frozen to $-18^{\circ}\text{C}$.,Excellent texture and color. Zero defects noted in inspection batch.
